@@ -44,7 +44,7 @@ ms 意为着以可以处理的最大max-gorutines 为主的一种strategy模式�
 
 1. 如果当前客户的正在处理任务数 多于 剩余闲置的 task-deal 线程数，则迭代遍历任务时不选取当前客户的task，继续处理选择下一个客户的task。避免上述某个时刻 某个客户占满了 task-deal 线程池且占用时间较久导致其他客户无法被服务。也就是说，下一个客户永远有闲置的线程可以用.直到达到最大并发数。达到最大并发数时，可用task-deal gorutines 为0 时，会因等待有可用的task-deal gorutines 阻塞 而不消费新的消息。
 
-当 最大并发数未满足，而某个客户却达到了 自身可用的 task-deal gorutines时，会继续接收消息，（并不会妨碍 其他客户的服务），但因此 也可能收到该客户自身的新消息，此时只能继续缓存消息，将该消息 加入 客户的task-list 中。但是因为内存限制不可能无限制加入。如果task-list 达到 FetchReconsumeListLen （PushReconsumeListLen）长度时，会通知rocketmq-server 延迟消费（ReconsumerLater）, 因此称为Reconsume strategy，该模式较适合 预取 等时间较长的任务。经测试 150w 占用内存300M.
+当 最大并发数未满足，而某个客户却达到了 自身可用的 task-deal gorutines时，会继续接收消息，（并不会妨碍 其他客户的服务），但因此 也可能收到该客户自身的新消息，此时只能继续缓存消息，将该消息 加入 客户的task-list 中。但是因为内存限制不可能无限制加入。如果task-list 达到ReconsumeListLen （ReconsumeListLen）长度时，会通知rocketmq-server 延迟消费（ReconsumerLater）, 因此称为Reconsume strategy，该模式较适合 预取 等时间较长的任务。经测试 150w 占用内存300M.
 
 **其他未实现模式**
 
