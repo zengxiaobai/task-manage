@@ -1,6 +1,16 @@
 # task-manage
 该模型基于rocketmq 可以扩展到其他类似任务处理。
 使用策略模式 将任务管理 单独 抽出来一个模块。真实应用程序只需实现任务处理逻辑 返回成功失败
+```
+/* Interface Comment
+ * for push and fetch, msg deal function is diffrent
+ * implement it at rocketxclean and rocketxfetch
+*/
+type taskDealMsg interface {
+	DealMsg(msgStruct InputMsg, msgDealCount int) int
+}
+```
+
 
 ![image](https://github.com/zengxiaobai/task-manage/blob/master/images/taskmanager.png)
 
