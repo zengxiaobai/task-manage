@@ -4,7 +4,7 @@
 ```
 /* Interface Comment
  * for push and fetch, msg deal function is diffrent
- * implement it at rocketxclean and rocketxfetch
+ * implement it at rocketexe
 */
 type taskDealMsg interface {
 	DealMsg(msgStruct InputMsg, msgDealCount int) int
